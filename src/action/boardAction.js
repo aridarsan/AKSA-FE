@@ -1,21 +1,21 @@
 import { CONSTANTS } from '../action'
-import uuid from 'uuidv4'
+// import uuid from 'uuidv4'
 
 export const setPapanAktif = (id) => {
   return {
     type: CONSTANTS.PAPAN_AKTIF,
     payload: {
-      id
+      id,
     },
   }
 }
 
-export const tambahPapan = (judul) => {
-  const id = uuid()
+export const tambahPapan = (title) => {
+  const id = new Date().getTime()
   return {
     type: CONSTANTS.TAMBAH_PAPAN,
     payload: {
-      judul,
+      title,
       id,
     },
   }

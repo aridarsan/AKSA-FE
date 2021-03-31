@@ -1,27 +1,20 @@
-import { CONSTANTS } from "../action";
-import uuid from "uuidv4";
+import { CONSTANTS } from '../action'
+// import uuid from "uuidv4";
 
-export const tambahDaftar = title => {
+export const tambahDaftar = (title) => {
   return (dispatch, getState) => {
-    const idPapan = getState().papanAktif;
-    const id = uuid();
+    const boardId = getState().papanAktif
+    const id = new Date().getTime()
     dispatch({
       type: CONSTANTS.TAMBAH_DAFTAR,
-      payload: { title, idPapan, id }
-    });
-  };
+      payload: { title, boardId, id },
+    })
+  }
 }
 
-export const sort = (
-  droppableIdStart,
-  droppableIdEnd,
-  droppableIndexStart,
-  droppableIndexEnd,
-  draggableId,
-  type
-) => {
+export const sort = (droppableIdStart, droppableIdEnd, droppableIndexStart, droppableIndexEnd, draggableId, type) => {
   return (dispatch, getState) => {
-    const idPapan = getState().papanAktif;
+    const boardId = getState().papanAktif
     dispatch({
       type: CONSTANTS.GESER,
       payload: {
@@ -31,31 +24,31 @@ export const sort = (
         droppableIndexEnd,
         draggableId,
         type,
-        idPapan
-      }
+        boardId,
+      },
     })
   }
 }
 
-export const editJudul = ( idDaftar, newJudul) => {
+export const editJudul = (listID, newTitle) => {
   return {
     type: CONSTANTS.EDIT_DAFTAR,
     payload: {
-      idDaftar,
-      newJudul
-    }
-  };
-};
+      listID,
+      newTitle,
+    },
+  }
+}
 
-export const hapusDaftar = (idDaftar) => {
+export const hapusDaftar = (listID) => {
   return (dispatch, getState) => {
-    const idPapan = getState().papanAktif;
+    const boardId = getState().papanAktif
     return dispatch({
       type: CONSTANTS.HAPUS_DAFTAR,
       payload: {
-        idDaftar,
-        idPapan
-      }
-    });
-  };
-};
+        listID,
+        boardId,
+      },
+    })
+  }
+}

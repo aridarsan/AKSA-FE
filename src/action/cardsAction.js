@@ -1,13 +1,13 @@
 import { CONSTANTS } from '../action'
-import uuid from 'uuidv4'
+// import uuid from 'uuidv4'
 
-export const tambahKartu = (idDaftar, text, judul, assign, todo, priority, startDate, endDate, status) => {
-  const id = uuid()
+export const tambahKartu = (listID, text, judul, assign, todo, priority, startDate, endDate, status) => {
+  const id = new Date().getTime()
   return {
     type: CONSTANTS.TAMBAH_KARTU,
     payload: {
       text,
-      idDaftar,
+      listID,
       id,
       judul,
       assign,
@@ -22,7 +22,7 @@ export const tambahKartu = (idDaftar, text, judul, assign, todo, priority, start
 
 export const editKartu = (
   id,
-  idDaftar,
+  listID,
   newText,
   newJudul,
   newAssign,
@@ -36,7 +36,7 @@ export const editKartu = (
     type: CONSTANTS.EDIT_KARTU,
     payload: {
       id,
-      idDaftar,
+      listID,
       newText,
       newJudul,
       newAssign,
@@ -49,12 +49,12 @@ export const editKartu = (
   }
 }
 
-export const hapusKartu = (id, idDaftar) => {
+export const hapusKartu = (id, listID) => {
   return {
     type: CONSTANTS.HAPUS_KARTU,
     payload: {
       id,
-      idDaftar,
+      listID,
     },
   }
 }

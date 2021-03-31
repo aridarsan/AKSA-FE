@@ -3,25 +3,27 @@ import { CONSTANTS } from "../action";
 const initialState = {
   "board-0": {
     id: "board-0",
+    title: "myboard",
     lists: ["list-0"],
-    title: "myboard"
   }
 };
 
-const boardsReducer = (state = initialState, action) => {
+const papanReducer = (state = initialState, action) => {
+  console.log(action.payload)
   switch (action.type) {
     case CONSTANTS.TAMBAH_DAFTAR: {
-      const { idPapan, id } = action.payload;
-      const board = state[idPapan];
+      const { boardId, id } = action.payload;
+      const board = state[boardId];
+      console.log(board)
       const newIdDaftar = `list-${id}`;
       const newLists = [...board.lists, newIdDaftar];
       board.lists = newLists;
-      return { ...state, [idPapan]: board };
+      return { ...state, [boardId]: board };
     }
 
     case CONSTANTS.GESER: {
-      const { idPapan } = action.payload;
-      const board = state[idPapan];
+      const { boardId } = action.payload;
+      const board = state[boardId];
       const lists = board.lists;
       const {
         droppableIndexEnd,
@@ -35,25 +37,26 @@ const boardsReducer = (state = initialState, action) => {
         lists.splice(droppableIndexEnd, 0, ...pulledOutList);
         board.lists = lists;
 
-        return { ...state, [idPapan]: board };
+        return { ...state, [boardId]: board };
       }
       return state;
     }
+
     case CONSTANTS.HAPUS_DAFTAR: {
-      const { listID, idPapan } = action.payload;
-      const board = state[idPapan];
+      const { listID, boardId } = action.payload;
+      const board = state[boardId];
       const lists = board.lists;
       const newLists = lists.filter(id => id !== listID);
       board.lists = newLists;
-      return { ...state, [idPapan]: board };
+      return { ...state, [boardId]: board };
     }
 
     case CONSTANTS.TAMBAH_PAPAN: {
-      const { judul, id } = action.payload;
+      const { title, id } = action.payload;
       const newID = `board-${id}`;
       const newBoard = {
         id: newID,
-        judul,
+        title,
         lists: []
       };
 
@@ -65,4 +68,4 @@ const boardsReducer = (state = initialState, action) => {
   }
 };
 
-export default boardsReducer;
+export default papanReducer;

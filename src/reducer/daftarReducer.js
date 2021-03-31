@@ -1,12 +1,12 @@
-import {  CONSTANTS } from "./action";
+import { CONSTANTS } from "../action";
 
 
 const initialState = {
   "list-0" : {
     id: "list-0",
-    kartu: ["card-0"],
-    judul: "My List",
-    papan: "papan-0"
+    cards: ["card-0"],
+    title: "My List",
+    // papan: "papan-0"
     
   }
 }
@@ -14,9 +14,9 @@ const initialState = {
 const daftarReducer = (state = initialState, action) => {
   switch (action.type) {
     case  CONSTANTS.TAMBAH_DAFTAR: {
-      const { judul, id } = action.payload;
+      const { title, id } = action.payload;
       const newDaftar = {
-        judul: judul,
+        title: title,
         id: `list-${id}`,
         kartu: []
       };
@@ -27,10 +27,11 @@ const daftarReducer = (state = initialState, action) => {
     }
 
     case  CONSTANTS.TAMBAH_KARTU: {
-      const { idDafar, id } = action.payload;
-      const list = state[idDafar];
-      list.cards.push(`card-${id}`);
-      return { ...state, [idDafar]: list };
+      const { listID, id } = action.payload;
+      console.log(listID)
+      const list = state[listID];
+      list.kartu.push(`card-${id}`);
+      return { ...state, [listID]: list };
     }
 
     case  CONSTANTS.GESER:
@@ -75,26 +76,27 @@ const daftarReducer = (state = initialState, action) => {
       return state;
 
     case  CONSTANTS.HAPUS_KARTU: {
-      const { idDafar, id } = action.payload;
+      const { listID, id } = action.payload;
 
-      const list = state[idDafar];
+      const list = state[listID];
       const newCards = list.cards.filter(cardID => cardID !== id);
 
-      return { ...state, [idDafar]: { ...list, cards: newCards } };
+      return { ...state, [listID]: { ...list, cards: newCards } };
     }
 
-    case  CONSTANTS.EDIT_LIST_TITLE: {
-      const { idDafar, newTitle } = action.payload;
+    case  CONSTANTS.EDIT_DAFTAR: {
+      const { listID, newTitle } = action.payload;
 
-      const list = state[idDafar];
-      list.title = newTitle;
-      return { ...state, [idDafar]: list };
+      const list = state[listID];
+      console.log(list)
+      list.judul = newTitle;
+      return { ...state, [listID]: list };
     }
 
-    case  CONSTANTS.DELETE_LIST: {
-      const { idDafar } = action.payload;
+    case  CONSTANTS.HAPUS_DAFTAR: {
+      const { listID } = action.payload;
       const newState = state;
-      delete newState[idDafar];
+      delete newState[listID];
       return newState;
     }
 
